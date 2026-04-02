@@ -20,7 +20,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-surface selection:bg-primary selection:text-on-primary">
       {/* Top Navigation Bar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#131313]/95 backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-6 md:px-12 py-5 transition-all duration-300">
+      <nav className="fixed top-0 w-full z-[100] bg-[#131313] backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-6 md:px-12 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-5 md:py-5 transition-all duration-300 before:content-[''] before:absolute before:bottom-full before:left-0 before:right-0 before:h-screen before:bg-[#131313]">
         <div className="text-xl font-headline font-bold text-primary tracking-[0.1em] uppercase">
           Easy Book
         </div>
@@ -39,7 +39,7 @@ export default function App() {
         </a>
       </nav>
 
-      <main className="pt-20">
+      <main className="pt-32 md:pt-20">
         {/* New Hero Variant: Split Layout */}
         <section className="relative h-screen flex flex-col lg:flex-row items-stretch overflow-hidden border-b border-primary/10">
           <div className="lg:w-1/2 flex flex-col justify-center px-6 md:px-20 py-20 relative z-10 bg-surface">
@@ -255,17 +255,19 @@ export default function App() {
         </section>
 
         {/* Trust Metrics */}
-        <section className="py-16 md:py-32 px-6 md:px-12 bg-surface">
-          <div className="max-w-[1440px] mx-auto flex flex-wrap justify-between gap-8 md:gap-12 text-center md:text-left">
+        <section className="py-16 md:py-32 px-4 md:px-12 bg-surface">
+          <div className="max-w-[1440px] mx-auto grid grid-cols-4 md:flex md:flex-wrap justify-between gap-1 md:gap-12 text-center md:text-left">
             {[
               { val: "2017", label: "Работаем с года" },
               { val: "526+", label: "Объектов в базе" },
               { val: "1,375", label: "Довольных клиентов" },
               { val: "€342k", label: "Сэкономлено" }
             ].map((metric, i) => (
-              <div key={i} className="min-w-[200px]">
-                <div className="text-5xl md:text-6xl font-headline text-primary mb-4 font-bold tracking-widest">{metric.val}</div>
-                <div className="font-label text-[10px] text-on-surface-variant uppercase tracking-[0.2em] font-medium">{metric.label}</div>
+              <div key={i} className="flex flex-col items-center md:items-start">
+                <div className="text-2xl md:text-6xl font-headline text-primary mb-1 md:mb-4 font-bold tracking-tight md:tracking-widest">{metric.val}</div>
+                <div className="font-label text-[7px] md:text-[10px] text-on-surface-variant uppercase tracking-tighter md:tracking-[0.2em] font-medium leading-tight md:leading-normal">
+                  {metric.label}
+                </div>
               </div>
             ))}
           </div>
