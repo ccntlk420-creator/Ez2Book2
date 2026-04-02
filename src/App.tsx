@@ -187,7 +187,7 @@ export default function App() {
         </section>
 
         {/* New Cases Variant: Vertical List with Large Images */}
-        <section id="cases" className="py-40 px-6 md:px-12 bg-surface">
+        <section id="cases" className="py-20 md:py-40 px-6 md:px-12 bg-surface">
           <div className="max-w-[1440px] mx-auto">
             <div className="mb-24 space-y-8">
               <h2 className="font-headline text-5xl md:text-7xl text-on-surface uppercase tracking-widest leading-none">
@@ -255,8 +255,8 @@ export default function App() {
         </section>
 
         {/* Trust Metrics */}
-        <section className="py-32 px-6 md:px-12 bg-surface">
-          <div className="max-w-[1440px] mx-auto flex flex-wrap justify-between gap-12 text-center md:text-left">
+        <section className="py-16 md:py-32 px-6 md:px-12 bg-surface">
+          <div className="max-w-[1440px] mx-auto flex flex-wrap justify-between gap-8 md:gap-12 text-center md:text-left">
             {[
               { val: "2017", label: "Работаем с года" },
               { val: "526+", label: "Объектов в базе" },
@@ -272,7 +272,7 @@ export default function App() {
         </section>
 
         {/* New CTA Variant: Minimalist Dark */}
-        <section className="py-60 px-6 md:px-12 bg-surface-container-lowest border-y border-primary/10">
+        <section className="py-32 md:py-60 px-6 md:px-12 bg-surface-container-lowest border-y border-primary/10">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="font-headline text-6xl md:text-8xl text-on-surface mb-12 uppercase tracking-tighter leading-none">
               Готовы к <br /> <span className="text-primary italic font-light">новым открытиям?</span>
