@@ -6,9 +6,11 @@ import {
   ChevronDown 
 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const { t } = useTranslation();
 
   return (
     <main className="pt-24 md:pt-20">
@@ -27,14 +29,14 @@ export default function Home() {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <div className="font-label text-primary text-[10px] uppercase tracking-[0.3em] mb-8 font-semibold">
-              Exclusive Access
+              {t('hero.tag')}
             </div>
             <h1 className="font-headline text-7xl md:text-8xl lg:text-9xl text-on-surface leading-[0.85] mb-12 uppercase">
-              Твой билет в <br />
-              <span className="italic font-light text-primary">мир люкса.</span>
+              {t('hero.title')} <br />
+              <span className="italic font-light text-primary">{t('hero.titleItalic')}</span>
             </h1>
             <p className="font-body text-lg md:text-xl text-on-surface-variant max-w-md mb-16 leading-relaxed font-light">
-              Бронируем лучшие отели мира со скидкой до 50%. Официально. Безопасно. Только для своих.
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-8">
               <a 
@@ -43,7 +45,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="gold-gradient text-on-primary px-14 py-6 rounded-sm font-label text-[11px] uppercase tracking-[0.25em] font-bold active:scale-95 transition-all shadow-2xl text-center"
               >
-                Посмотреть кейсы
+                {t('hero.ctaCases')}
               </a>
               <a 
                 href="https://t.me/EASYBOOK_HOTELS"
@@ -52,7 +54,7 @@ export default function Home() {
                 className="group flex items-center gap-4 font-label text-[11px] uppercase tracking-[0.25em] text-on-surface hover:text-primary transition-colors"
               >
                 <span className="w-12 h-px bg-primary/30 group-hover:w-16 transition-all translate-y-[4px]"></span>
-                Telegram
+                {t('hero.ctaTg')}
               </a>
             </div>
           </motion.div>
@@ -80,15 +82,15 @@ export default function Home() {
       <section className="py-0 border-b border-primary/10">
         <div className="grid grid-cols-1 md:grid-cols-3">
           {[
-            { icon: Key, title: "Прямой доступ", desc: "Минуем розничные наценки агрегаторов через инвентарь туроператоров." },
-            { icon: ShieldCheck, title: "API и VPN", desc: "Используем региональные ценовые лазейки, доступные только профи." },
-            { icon: Lock, title: "Закрытые тарифы", desc: "Эксклюзивные предложения, скрытые от широкой публики." }
+            { icon: Key, key: 'access' },
+            { icon: ShieldCheck, key: 'api' },
+            { icon: Lock, key: 'private' }
           ].map((feature, i) => (
             <div key={i} className="p-16 border-r border-primary/10 last:border-r-0 hover:bg-primary/[0.02] transition-colors group">
               <feature.icon className="text-primary w-10 h-10 mb-10 stroke-[1px] group-hover:scale-110 transition-transform" />
-              <h3 className="font-headline text-2xl text-on-surface uppercase tracking-widest mb-6">{feature.title}</h3>
+              <h3 className="font-headline text-2xl text-on-surface uppercase tracking-widest mb-6">{t(`features.${feature.key}.title`)}</h3>
               <p className="font-body text-on-surface-variant leading-relaxed font-light text-sm">
-                {feature.desc}
+                {t(`features.${feature.key}.desc`)}
               </p>
             </div>
           ))}
@@ -99,14 +101,14 @@ export default function Home() {
       <section className="py-20 md:py-40 px-6 md:px-12 bg-surface-container-lowest">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block px-4 py-1 border border-primary/20 rounded-full mb-10">
-            <span className="font-label text-[9px] uppercase tracking-[0.3em] text-primary">Smart Luxury</span>
+            <span className="font-label text-[9px] uppercase tracking-[0.3em] text-primary">{t('editorial.tag')}</span>
           </div>
           <h2 className="font-headline text-5xl md:text-7xl text-on-surface mb-12 leading-tight uppercase tracking-widest">
-            Отдыхай как <span className="italic font-light text-primary">миллионер</span>, <br />
-            плати как <span className="italic font-light text-primary">турист</span>.
+            {t('editorial.title1')} <span className="italic font-light text-primary">{t('editorial.title1Italic')}</span>, <br />
+            {t('editorial.title2')} <span className="italic font-light text-primary">{t('editorial.title2Italic')}</span>
           </h2>
           <p className="font-body text-xl text-on-surface-variant mb-16 leading-relaxed font-light max-w-2xl mx-auto">
-            Мы не просто ищем скидки. Мы открываем двери в мир, который раньше был доступен только через личные связи.
+            {t('editorial.desc')}
           </p>
           <a 
             href="https://t.me/EASYBOOK_HOTELS"
@@ -114,7 +116,7 @@ export default function Home() {
             rel="noopener noreferrer"
             className="gold-gradient text-on-primary px-16 py-6 rounded-sm font-label text-xs uppercase tracking-[0.3em] font-bold active:scale-95 transition-all inline-block shadow-xl"
           >
-            Начать экономить
+            {t('editorial.cta')}
           </a>
         </div>
       </section>
@@ -123,27 +125,11 @@ export default function Home() {
       <section className="py-16 md:py-32 px-6 md:px-12 bg-surface">
         <div className="max-w-[1440px] mx-auto">
           <div className="mb-20">
-            <h2 className="font-headline text-4xl text-on-surface uppercase tracking-widest">Для кого наш сервис</h2>
+            <h2 className="font-headline text-4xl text-on-surface uppercase tracking-widest">{t('audience.title')}</h2>
             <div className="w-16 h-px bg-primary mt-8"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {[
-              {
-                label: "The Connoisseur",
-                title: "Ценитель комфорта",
-                desc: "Для тех, кто привык к 5 звездам и безупречному сервису, но не видит смысла платить маркетинговый налог агрегаторов."
-              },
-              {
-                label: "The Strategist",
-                title: "Стратег",
-                desc: "Для тех, кто планирует сложные маршруты и ценит возможность продлить отпуск в два раза при том же бюджете."
-              },
-              {
-                label: "The Explorer",
-                title: "Активный путешественник",
-                desc: "Для тех, кто всегда в движении и ищет способ получить больше впечатлений от каждой поездки по всему миру."
-              }
-            ].map((item, i) => (
+            {(t('audience.items', { returnObjects: true }) as any[]).map((item, i) => (
               <motion.div 
                 key={i}
                 whileHover={{ y: -10 }}
@@ -163,10 +149,10 @@ export default function Home() {
         <div className="max-w-[1440px] mx-auto">
           <div className="mb-24 space-y-8">
             <h2 className="font-headline text-5xl md:text-7xl text-on-surface uppercase tracking-widest leading-none">
-              Наши <span className="text-primary italic font-light">Кейсы.</span>
+              {t('cases.title')} <span className="text-primary italic font-light">{t('cases.titleItalic')}</span>
             </h2>
             <p className="font-body text-on-surface-variant max-w-md font-light">
-              Реальные бронирования наших клиентов за последний месяц. Сравните цены и убедитесь сами.
+              {t('cases.subtitle')}
             </p>
           </div>
           
@@ -174,54 +160,51 @@ export default function Home() {
             {[
               {
                 img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBm1zs63w0gEkSq0P0N37sNImg8kZWRJBSapBYQtAAko3kry3AVzw7cjHKvQwUDSG1y0zZUwcehIGTKi9ITHz7kIjNpQYKTi8QAeIxX0MbfhDsOQTcKZ2Hfk7bmXimU479DBmwM6jUwUgsqp2OKTHRzfcVU1xYl8zyUFkLCzpC4g9yCRZnG0c_YEGeY93C1sjSqR2KRerS6-9plapcy3OouBeSbldhAEZJfpuHQZFzdL68PrMQa4xN_jgtDyyUR6IsUCbIMAMQtHfnv=s0",
-                name: "ME Barcelona",
-                loc: "Испания, Барселона • 7 ночей",
                 old: "€3,420",
                 new: "€1,890",
                 disc: "-45%",
-                desc: "Люкс с видом на город. Бронирование через закрытый канал туроператора."
               },
               {
                 img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDB2wIUfUAQf2AeHVrjDdhOr4BXy_5HVWy2d-5DFyU0PGtYTiM40iW2CxdC0lIWGI8crMqzLJs4PuAHJ7ix-RPjWXu4FGB6fL-Ts7qH4ggHkAaPS5GUzOMtqVjaWEX8OlxGmHgaeHFR8FHJa164dQRpH6ojmR2v1tLudEc_UQ045mfWHBUtnpIbFSGWyKHbkatMZ1ph3SpgkiTLueLF3gEkEEhigm-W7cVg33NLgBM4JAuPV0AE-VZ1gahyNEKjzV0EiBPoE6ay3ElV=s0",
-                name: "The Capra Saas-Fee",
-                loc: "Швейцария, Альпы • 5 ночей",
                 old: "€4,100",
                 new: "€2,460",
                 disc: "-40%",
-                desc: "Шале премиум-класса. Использование региональных API цен."
               }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="flex flex-col lg:flex-row gap-20 items-center"
-              >
-                <div className="lg:w-3/5 aspect-[16/9] overflow-hidden rounded-sm">
-                  <img 
-                    className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-1000" 
-                    src={item.img}
-                    alt={item.name}
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-                <div className="lg:w-2/5">
-                  <h4 className="font-headline text-4xl text-on-surface mb-6 uppercase tracking-widest">{item.name}</h4>
-                  <p className="font-label text-on-surface-variant text-xs uppercase tracking-widest mb-8">{item.loc}</p>
-                  <p className="font-body text-on-surface-variant mb-12 font-light leading-relaxed">{item.desc}</p>
-                  <div className="flex flex-col items-start gap-4">
-                    <div className="bg-primary/10 text-primary px-4 py-1 rounded-full font-label text-[10px] uppercase tracking-widest font-bold">
-                      {item.disc} Savings
-                    </div>
-                    <div className="flex items-baseline gap-6">
-                      <span className="text-on-surface-variant line-through text-lg font-label">{item.old}</span>
-                      <span className="text-primary text-5xl font-headline font-bold">{item.new}</span>
+            ].map((item, i) => {
+              const caseData = (t(`cases.items`, { returnObjects: true }) as any[])[i];
+              return (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="flex flex-col lg:flex-row gap-20 items-center"
+                >
+                  <div className="lg:w-3/5 aspect-[16/9] overflow-hidden rounded-sm">
+                    <img 
+                      className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-1000" 
+                      src={item.img}
+                      alt={caseData.name}
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="lg:w-2/5">
+                    <h4 className="font-headline text-4xl text-on-surface mb-6 uppercase tracking-widest">{caseData.name}</h4>
+                    <p className="font-label text-on-surface-variant text-xs uppercase tracking-widest mb-8">{caseData.loc}</p>
+                    <p className="font-body text-on-surface-variant mb-12 font-light leading-relaxed">{caseData.desc}</p>
+                    <div className="flex flex-col items-start gap-4">
+                      <div className="bg-primary/10 text-primary px-4 py-1 rounded-full font-label text-[10px] uppercase tracking-widest font-bold">
+                        {item.disc} {t('cases.savings')}
+                      </div>
+                      <div className="flex items-baseline gap-6">
+                        <span className="text-on-surface-variant line-through text-lg font-label">{item.old}</span>
+                        <span className="text-primary text-5xl font-headline font-bold">{item.new}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -230,15 +213,15 @@ export default function Home() {
       <section className="py-16 md:py-32 px-4 md:px-12 bg-surface">
         <div className="max-w-[1440px] mx-auto grid grid-cols-4 md:flex md:flex-wrap justify-between gap-1 md:gap-12 text-center md:text-left">
           {[
-            { val: "2017", label: "Работаем с года" },
-            { val: "526+", label: "Объектов в базе" },
-            { val: "1,375", label: "Довольных клиентов" },
-            { val: "€342k", label: "Сэкономлено" }
+            { val: "2017", key: "years" },
+            { val: "526+", key: "objects" },
+            { val: "1,375", key: "clients" },
+            { val: "€342k", key: "saved" }
           ].map((metric, i) => (
             <div key={i} className="flex flex-col items-center md:items-start">
               <div className="text-2xl md:text-6xl font-headline text-primary mb-1 md:mb-4 font-bold tracking-tight md:tracking-widest">{metric.val}</div>
               <div className="font-label text-[7px] md:text-[10px] text-on-surface-variant uppercase tracking-tighter md:tracking-[0.2em] font-medium leading-tight md:leading-normal">
-                {metric.label}
+                {t(`metrics.${metric.key}`)}
               </div>
             </div>
           ))}
@@ -249,7 +232,7 @@ export default function Home() {
       <section className="py-20 md:py-60 px-6 md:px-12 bg-surface-container-lowest border-y border-primary/10">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="font-headline text-6xl md:text-8xl text-on-surface mb-12 uppercase tracking-tighter leading-none">
-            Готовы к <br /> <span className="text-primary italic font-light">новым открытиям?</span>
+            {t('cta.title')} <br /> <span className="text-primary italic font-light">{t('cta.titleItalic')}</span>
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-12 items-center">
             <a 
@@ -258,7 +241,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="gold-gradient text-on-primary px-20 py-7 rounded-sm font-label text-xs uppercase tracking-[0.4em] font-bold active:scale-95 transition-all shadow-2xl"
             >
-              Запросить подборку
+              {t('cta.request')}
             </a>
             <a 
               href="https://t.me/easybook_hotel"
@@ -266,7 +249,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="font-label text-xs uppercase tracking-[0.4em] text-on-surface-variant hover:text-primary transition-colors"
             >
-              Посмотреть кейсы
+              {t('cta.cases')}
             </a>
           </div>
         </div>
@@ -275,22 +258,9 @@ export default function Home() {
       {/* FAQ Section */}
       <section id="faq" className="py-16 md:py-32 px-6 md:px-12 bg-surface-container-low">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-headline text-3xl text-on-surface mb-16 text-center uppercase tracking-widest">Часто задаваемые вопросы</h2>
+          <h2 className="font-headline text-3xl text-on-surface mb-16 text-center uppercase tracking-widest">{t('faq.title')}</h2>
           <div className="space-y-6">
-            {[
-              {
-                q: "Почему цены такие низкие?",
-                a: "Мы используем корпоративные тарифы, доступ к которым имеют только крупные агенты, а также бронируем через партнерские каналы в других регионах, где цены на те же отели значительно ниже."
-              },
-              {
-                q: "Это легально?",
-                a: "Абсолютно. Вы получаете официальный ваучер отеля. Ваше бронирование будет отображаться в системе отеля так же, как если бы вы забронировали его сами."
-              },
-              {
-                q: "Что если я передумаю?",
-                a: "Условия отмены зависят от выбранного тарифа. Мы всегда предлагаем как невозвратные варианты с максимальной скидкой, так и гибкие тарифы с возможностью отмены."
-              }
-            ].map((faq, i) => (
+            {(t('faq.items', { returnObjects: true }) as any[]).map((faq, i) => (
               <div 
                 key={i} 
                 className="bg-surface border border-outline-variant/5 rounded-sm overflow-hidden"

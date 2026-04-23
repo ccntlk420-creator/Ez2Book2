@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const consent = localStorage.getItem("cookie-consent");
@@ -36,9 +38,9 @@ export default function CookieBanner() {
             <div className="absolute top-0 left-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors duration-500"></div>
             
             <div className="flex-1 space-y-2">
-              <h4 className="font-headline text-lg text-primary uppercase tracking-widest font-bold">Cookies & Privacy</h4>
+              <h4 className="font-headline text-lg text-primary uppercase tracking-widest font-bold">{t('cookies.title')}</h4>
               <p className="font-body text-sm text-[#E5E2E1]/70 leading-relaxed max-w-2xl font-light">
-                We use cookies to enhance your experience and analyze our traffic. By clicking "Accept", you consent to our use of cookies as described in our{" "}
+                {t('cookies.desc')}{" "}
                 <Link to="/cookies" className="text-primary hover:underline underline-offset-4 decoration-primary/30 transition-all font-medium">
                   Cookie Policy
                 </Link>.
@@ -50,7 +52,7 @@ export default function CookieBanner() {
                 onClick={acceptCookies}
                 className="gold-gradient text-on-primary px-8 py-3 rounded-sm font-label text-[10px] uppercase tracking-[0.2em] font-bold active:scale-95 transition-all shadow-xl w-full md:w-auto"
               >
-                Accept All
+                {t('cookies.btn')}
               </button>
               <button
                 onClick={() => setIsVisible(false)}

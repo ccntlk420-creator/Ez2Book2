@@ -6,11 +6,13 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Instagram } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import Home from "./pages/Home.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
 import Cookies from "./pages/Cookies.tsx";
 import CookieBanner from "./components/CookieBanner.tsx";
+import LanguageSwitcher from "./components/LanguageSwitcher.tsx";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -32,6 +34,8 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const { t } = useTranslation();
+
   return (
     <Router>
       <ScrollToTop />
@@ -42,11 +46,14 @@ export default function App() {
             Easy Book
           </Link>
           <div className="hidden md:flex items-center space-x-10 font-label font-medium text-[10px] tracking-[0.2em] uppercase">
-            <Link to="/" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">О нас</Link>
-            <a href="/#cases" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">Кейсы</a>
-            <a href="/#faq" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">FAQ</a>
+            <Link to="/" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t('nav.about')}</Link>
+            <a href="/#cases" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t('nav.cases')}</a>
+            <a href="/#faq" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t('nav.faq')}</a>
           </div>
           <div className="flex items-center gap-6">
+            <div className="hidden sm:block">
+              <LanguageSwitcher />
+            </div>
             <a 
               href="https://www.instagram.com/easy.book_/" 
               target="_blank" 
@@ -62,7 +69,7 @@ export default function App() {
               rel="noopener noreferrer"
               className="gold-gradient text-on-primary px-7 py-2.5 rounded-sm font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center"
             >
-              Забронировать
+              {t('nav.book')}
             </a>
           </div>
         </nav>
@@ -92,7 +99,7 @@ export default function App() {
               </Link>
             </div>
             <div className="font-label text-[10px] uppercase tracking-[0.1em] text-[#E5E2E1]/40">
-              © 2024 Easy Book. Private Concierge.
+              {t('footer.rights')}
             </div>
           </div>
         </footer>
