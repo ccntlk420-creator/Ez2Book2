@@ -10,6 +10,7 @@ import Home from "./pages/Home.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
 import Cookies from "./pages/Cookies.tsx";
+import CookieBanner from "./components/CookieBanner.tsx";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -72,6 +73,8 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/cookies" element={<Cookies />} />
         </Routes>
+
+        <CookieBanner />
 
         {/* Footer */}
         <footer className="w-full py-16 px-6 md:px-12 border-t border-primary/5 bg-[#131313]">
