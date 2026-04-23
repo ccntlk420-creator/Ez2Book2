@@ -1,7 +1,8 @@
 {
+  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/|favicon.png|.*\\.).*)",
       "destination": "/index.html"
     }
   ]
