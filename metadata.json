@@ -1,8 +1,5 @@
-node_modules/
-build/
-dist/
-coverage/
-.DS_Store
-*.log
-.env*
-!.env.example
+{
+  "name": "Easy Book Luxury Private Concierge",
+  "description": "Exclusive hotel bookings with 30-50% savings compared to major platforms.",
+  "requestFramePermissions": []
+}
