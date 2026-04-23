@@ -1,49 +1,99 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@200;300;400;500;600&family=Montserrat:wght@300;400;500;600;700&display=swap");
-@import "tailwindcss";
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-@theme {
-  --font-headline: "Cormorant Garamond", serif;
-  --font-body: "Inter", sans-serif;
-  --font-label: "Montserrat", sans-serif;
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Instagram } from "lucide-react";
+import Home from "./pages/Home.tsx";
+import Privacy from "./pages/Privacy.tsx";
+import Terms from "./pages/Terms.tsx";
+import Cookies from "./pages/Cookies.tsx";
 
-  --color-primary: #e9c176;
-  --color-primary-container: #c5a059;
-  --color-on-primary: #412d00;
-  --color-surface: #131313;
-  --color-surface-container-low: #1c1b1b;
-  --color-surface-container-high: #2a2a2a;
-  --color-surface-container-highest: #353535;
-  --color-surface-container-lowest: #0e0e0e;
-  --color-on-surface: #e5e2e1;
-  --color-on-surface-variant: #d1c5b4;
-  --color-outline-variant: #4e4639;
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+    } else {
+      const id = hash.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [pathname, hash]);
+
+  return null;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    @apply bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary antialiased;
-  }
-}
+export default function App() {
+  return (
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen bg-surface selection:bg-primary selection:text-on-primary">
+        {/* Top Navigation Bar */}
+        <nav className="fixed top-0 w-full z-[100] bg-[#131313] backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-6 md:px-12 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-5 md:py-5 transition-all duration-300 before:content-[''] before:absolute before:-top-[500px] before:left-0 before:right-0 before:h-[500px] before:bg-[#131313]">
+          <Link to="/" className="text-xl font-headline font-bold text-primary tracking-[0.1em] uppercase">
+            Easy Book
+          </Link>
+          <div className="hidden md:flex items-center space-x-10 font-label font-medium text-[10px] tracking-[0.2em] uppercase">
+            <Link to="/" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">О нас</Link>
+            <a href="/#cases" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">Кейсы</a>
+            <a href="/#faq" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">FAQ</a>
+          </div>
+          <div className="flex items-center gap-6">
+            <a 
+              href="https://www.instagram.com/easy.book_/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#E5E2E1]/70 hover:text-[#FFDEA5] transition-colors duration-300"
+              aria-label="Instagram"
+            >
+              <Instagram size={22} strokeWidth={2} />
+            </a>
+            <a 
+              href="https://t.me/EASYBOOK_HOTELS" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="gold-gradient text-on-primary px-7 py-2.5 rounded-sm font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center"
+            >
+              Забронировать
+            </a>
+          </div>
+        </nav>
 
-@layer utilities {
-  .gold-gradient {
-    background: linear-gradient(135deg, #e9c176 0%, #c5a059 100%);
-  }
-  .glass-panel {
-    background: rgba(53, 53, 53, 0.6);
-    backdrop-filter: blur(24px);
-  }
-  .custom-shadow {
-    box-shadow: 0 0 40px 0 rgba(229, 226, 225, 0.06);
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/cookies" element={<Cookies />} />
+        </Routes>
+
+        {/* Footer */}
+        <footer className="w-full py-16 px-6 md:px-12 border-t border-primary/5 bg-[#131313]">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-10 max-w-[1920px] mx-auto">
+            <Link to="/" className="text-xl font-headline font-bold text-primary tracking-[0.1em] uppercase">Easy Book</Link>
+            <div className="flex gap-10 font-label text-[10px] uppercase tracking-[0.1em]">
+              <Link to="/privacy" className="text-[#E5E2E1]/40 hover:text-primary transition-colors duration-300">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="text-[#E5E2E1]/40 hover:text-primary transition-colors duration-300">
+                Terms of Service
+              </Link>
+              <Link to="/cookies" className="text-[#E5E2E1]/40 hover:text-primary transition-colors duration-300">
+                Cookie Policy
+              </Link>
+            </div>
+            <div className="font-label text-[10px] uppercase tracking-[0.1em] text-[#E5E2E1]/40">
+              © 2024 Easy Book. Private Concierge.
+            </div>
+          </div>
+        </footer>
+      </div>
+    </Router>
+  );
 }

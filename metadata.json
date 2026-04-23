@@ -1,5 +1,8 @@
-{
-  "name": "Remix: Easy Book - Luxury Travel Concierge",
-  "description": "Exclusive hotel bookings with 30-50% savings compared to major platforms.",
-  "requestFramePermissions": []
-}
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
