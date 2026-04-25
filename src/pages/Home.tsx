@@ -13,10 +13,10 @@ export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <main className="pt-24 md:pt-20">
+    <main className="pt-32 md:pt-20">
       {/* New Hero Variant: Split Layout */}
-      <section className="relative h-screen flex flex-col lg:flex-row items-stretch overflow-hidden border-b border-primary/10">
-        <div className="lg:w-1/2 flex flex-col justify-center px-6 md:px-20 py-12 md:py-20 relative z-10 bg-surface">
+      <section className="relative min-h-[90vh] lg:h-screen flex flex-col lg:flex-row items-stretch overflow-hidden border-b border-primary/10">
+        <div className="lg:w-1/2 flex flex-col justify-center px-6 md:px-20 py-16 md:py-20 relative z-10 bg-surface">
           <div className="absolute top-10 left-10 hidden xl:block">
             <span className="font-label text-[10px] uppercase tracking-[0.4em] text-primary/40 rotate-90 origin-left inline-block whitespace-nowrap">
               EST. 2017 • PRIVATE CONCIERGE
@@ -35,26 +35,26 @@ export default function Home() {
               {t('hero.title')} <br />
               <span className="italic font-light text-primary">{t('hero.titleItalic')}</span>
             </h1>
-            <p className="font-body text-lg md:text-xl text-on-surface-variant max-w-md mb-16 leading-relaxed font-light">
+            <p className="font-body text-lg md:text-xl text-on-surface-variant max-w-md mb-10 md:mb-16 leading-relaxed font-light">
               {t('hero.subtitle')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-8">
+            <div className="flex flex-col sm:flex-row gap-6 md:gap-8">
               <a 
                 href="https://t.me/easybook_hotel"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="gold-gradient text-on-primary px-14 py-6 rounded-sm font-label text-[11px] uppercase tracking-[0.25em] font-bold active:scale-95 transition-all shadow-2xl text-center"
+                className="gold-gradient text-on-primary px-10 md:px-14 py-5 md:py-6 rounded-sm font-label text-[10px] md:text-[11px] uppercase tracking-[0.25em] font-bold active:scale-95 transition-all shadow-2xl text-center"
               >
                 {t('hero.ctaCases')}
               </a>
               <a 
                 href="https://t.me/EASYBOOK_HOTELS"
-                target="_blank"
+                target="_blank" 
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 font-label text-[11px] uppercase tracking-[0.25em] text-on-surface hover:text-primary transition-colors"
+                className="group flex items-center justify-center sm:justify-start gap-4 font-label text-[11px] uppercase tracking-[0.25em] text-on-surface hover:text-primary transition-colors py-2"
               >
-                <span className="w-12 h-px bg-primary/30 group-hover:w-16 transition-all translate-y-[4px]"></span>
-                {t('hero.ctaTg')}
+                <span className="w-8 md:w-12 h-px bg-primary/30 group-hover:w-16 transition-all"></span>
+                <span className="translate-y-[1px]">{t('hero.ctaTg')}</span>
               </a>
             </div>
           </motion.div>
@@ -68,7 +68,7 @@ export default function Home() {
             className="absolute inset-0"
           >
             <img 
-              className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-1000" 
+              className="w-full h-full object-cover transition-all duration-1000 hover:scale-105 hover:brightness-110" 
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVylbQsyxc-2dVAyV0E7NlLdiqfX8rvRSy7R0pfpaX6f6Ai7bC0h69CMPVRe-Sfuiagj5DLZkmNW2OU05hDxXZIkxki5sNLirNoOL_bpEx1t3i3McWneruiTmXToPAte8khgR5cFkPkBuMQ-Wc8KlvQGuq5guSgktDrjtmdSO2vpTpF0rO6CYHi5ljSMaV0_u6QEwG9zj6t53EWMhKq7rALFJx_NedMzhj6mXF_a_fUfWXJBN-6nwbnX87UnZYNYhJ_VVDVs0FTruy=s0"
               alt="Luxury travel"
               referrerPolicy="no-referrer"
@@ -173,36 +173,37 @@ export default function Home() {
             ].map((item, i) => {
               const caseData = (t(`cases.items`, { returnObjects: true }) as any[])[i];
               return (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="flex flex-col lg:flex-row gap-20 items-center"
-                >
-                  <div className="lg:w-3/5 aspect-[16/9] overflow-hidden rounded-sm">
-                    <img 
-                      className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-1000" 
-                      src={item.img}
-                      alt={caseData.name}
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="lg:w-2/5">
-                    <h4 className="font-headline text-4xl text-on-surface mb-6 uppercase tracking-widest">{caseData.name}</h4>
-                    <p className="font-label text-on-surface-variant text-xs uppercase tracking-widest mb-8">{caseData.loc}</p>
-                    <p className="font-body text-on-surface-variant mb-12 font-light leading-relaxed">{caseData.desc}</p>
-                    <div className="flex flex-col items-start gap-4">
-                      <div className="bg-primary/10 text-primary px-4 py-1 rounded-full font-label text-[10px] uppercase tracking-widest font-bold">
-                        {item.disc} {t('cases.savings')}
-                      </div>
-                      <div className="flex items-baseline gap-6">
-                        <span className="text-on-surface-variant line-through text-lg font-label">{item.old}</span>
-                        <span className="text-primary text-5xl font-headline font-bold">{item.new}</span>
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    whileHover={{ y: -10 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col lg:flex-row gap-20 items-center p-8 md:p-12 bg-surface-container-lowest border border-outline-variant/5 hover:border-primary/30 rounded-sm transition-all duration-500"
+                  >
+                    <div className="lg:w-3/5 aspect-[16/9] overflow-hidden rounded-sm group">
+                      <img 
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 group-hover:brightness-110" 
+                        src={item.img}
+                        alt={caseData.name}
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="lg:w-2/5">
+                      <h4 className="font-headline text-4xl text-on-surface mb-6 uppercase tracking-widest">{caseData.name}</h4>
+                      <p className="font-label text-on-surface-variant text-xs uppercase tracking-widest mb-8">{caseData.loc}</p>
+                      <p className="font-body text-on-surface-variant mb-12 font-light leading-relaxed">{caseData.desc}</p>
+                      <div className="flex flex-col items-start gap-4">
+                        <div className="bg-primary/10 text-primary px-4 py-1 rounded-full font-label text-[10px] uppercase tracking-widest font-bold">
+                          {item.disc} {t('cases.savings')}
+                        </div>
+                        <div className="flex items-baseline gap-6">
+                          <span className="text-on-surface-variant line-through text-lg font-label">{item.old}</span>
+                          <span className="text-primary text-5xl font-headline font-bold">{item.new}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
               );
             })}
           </div>
@@ -212,18 +213,23 @@ export default function Home() {
       {/* Trust Metrics */}
       <section className="py-16 md:py-32 px-4 md:px-12 bg-surface">
         <div className="max-w-[1440px] mx-auto grid grid-cols-4 md:flex md:flex-wrap justify-between gap-1 md:gap-12 text-center md:text-left">
+          {/* Updated Metrics with floating effect */}
           {[
             { val: "2017", key: "years" },
             { val: "526+", key: "objects" },
             { val: "1,375", key: "clients" },
             { val: "€342k", key: "saved" }
           ].map((metric, i) => (
-            <div key={i} className="flex flex-col items-center md:items-start">
+            <motion.div 
+              key={i} 
+              whileHover={{ y: -5 }}
+              className="flex flex-col items-center md:items-start p-4 hover:bg-primary/[0.02] rounded-sm transition-colors"
+            >
               <div className="text-2xl md:text-6xl font-headline text-primary mb-1 md:mb-4 font-bold tracking-tight md:tracking-widest">{metric.val}</div>
               <div className="font-label text-[7px] md:text-[10px] text-on-surface-variant uppercase tracking-tighter md:tracking-[0.2em] font-medium leading-tight md:leading-normal">
                 {t(`metrics.${metric.key}`)}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>

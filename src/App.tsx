@@ -41,8 +41,8 @@ export default function App() {
       <ScrollToTop />
       <div className="min-h-screen bg-surface selection:bg-primary selection:text-on-primary">
         {/* Top Navigation Bar */}
-        <nav className="fixed top-0 w-full z-[100] bg-[#131313] backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-6 md:px-12 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-5 md:py-5 transition-all duration-300 before:content-[''] before:absolute before:-top-[500px] before:left-0 before:right-0 before:h-[500px] before:bg-[#131313]">
-          <Link to="/" className="text-xl font-headline font-bold text-primary tracking-[0.1em] uppercase">
+        <nav className="fixed top-0 w-full z-[100] bg-[#131313] backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-4 md:px-12 pt-[calc(env(safe-area-inset-top)+1rem)] pb-4 md:py-5 transition-all duration-300 before:content-[''] before:absolute before:-top-[500px] before:left-0 before:right-0 before:h-[500px] before:bg-[#131313]">
+          <Link to="/" className="text-lg md:text-xl font-headline font-bold text-primary tracking-[0.1em] uppercase">
             Easy Book
           </Link>
           <div className="hidden md:flex items-center space-x-10 font-label font-medium text-[10px] tracking-[0.2em] uppercase">
@@ -50,7 +50,7 @@ export default function App() {
             <a href="/#cases" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t('nav.cases')}</a>
             <a href="/#faq" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t('nav.faq')}</a>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 md:gap-6">
             <div className="hidden sm:block">
               <LanguageSwitcher />
             </div>
@@ -61,13 +61,13 @@ export default function App() {
               className="text-[#E5E2E1]/70 hover:text-[#FFDEA5] transition-colors duration-300"
               aria-label="Instagram"
             >
-              <Instagram size={22} strokeWidth={2} />
+              <Instagram size={20} strokeWidth={2} />
             </a>
             <a 
               href="https://t.me/EASYBOOK_HOTELS" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="gold-gradient text-on-primary px-7 py-2.5 rounded-sm font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center"
+              className="gold-gradient text-on-primary px-4 md:px-7 py-2 md:py-2.5 rounded-sm font-label text-[9px] md:text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center whitespace-nowrap"
             >
               {t('nav.book')}
             </a>
