@@ -496,7 +496,13 @@ function BookingFormModal() {
         body: JSON.stringify({ ...formData, lang })
       });
 
-      const data = await response.json() as any;
+      const responseText = await response.text();
+      let data: any;
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        throw new Error(`Server returned non-JSON response (${response.status}): ${responseText.substring(0, 150)}`);
+      }
 
       if (!response.ok || !data.success) {
         throw new Error(data.error || "Something went wrong");
