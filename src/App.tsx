@@ -11,10 +11,14 @@ import {
   ChevronDown, 
   ChevronLeft,
   Instagram,
-  Globe
+  Globe,
+  X,
+  Check
 } from "lucide-react";
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+// @ts-ignore
+import franciscoBoutique from "./assets/images/francisco_boutique_1779373540923.png";
 
 type Language = 'RU' | 'EN';
 
@@ -22,6 +26,8 @@ interface LanguageContextType {
   lang: Language;
   setLang: (lang: Language) => void;
   t: any;
+  isFormOpen: boolean;
+  setIsFormOpen: (open: boolean) => void;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -68,7 +74,8 @@ const TRANSLATIONS = {
       p: "Реальные бронирования наших клиентов за последний месяц. Сравните цены и убедитесь сами.",
       items: [
          { name: "ME Barcelona", loc: "Испания, Барселона • 7 ночей", desc: "Люкс с видом на город. Бронирование через закрытый канал туроператора.", disc: "-45%" },
-         { name: "The Capra Saas-Fee", loc: "Швейцария, Альпы • 5 ночей", desc: "Шале премиум-класса. Использование региональных API цен.", disc: "-40%" }
+         { name: "The Capra Saas-Fee", loc: "Швейцария, Альпы • 5 ночей", desc: "Шале премиум-класса. Использование региональных API цен.", disc: "-40%" },
+         { name: "Hotel Francisco Boutique", loc: "Испания, Мадрид • 4 ночи", desc: "Уютный исторический бутик-отель в самом сердце Мадрида. Использование закрытых корпоративных тарифов.", disc: "-50%" }
       ]
     },
     trust: [
@@ -105,6 +112,29 @@ const TRANSLATIONS = {
       text: "Мы используем файлы cookie для улучшения вашего опыта. Продолжая использование сайта, вы соглашаетесь с нашей ",
       link: "Политикой cookie",
       btn: "Принять"
+    },
+    form: {
+      title: "Заявка на подбор отеля",
+      subtitle: "Укажите ваши пожелания, и мы подготовим эксклюзивное предложение со скидкой до 50% индивидуально для вас.",
+      name: "Ваше имя",
+      namePlaceholder: "Александр",
+      destination: "Куда отправляетесь? / Название отеля",
+      destinationPlaceholder: "Например: ME Barcelona или Мальдивы",
+      dates: "Даты поездки",
+      datesPlaceholder: "Лето 2026 или конкретные даты",
+      guests: "Количество гостей",
+      guestsPlaceholder: "Например: 2 взрослых, 1 ребенок",
+      budget: "Ориентировочный бюджет",
+      budgetPlaceholder: "Например: до 3000€",
+      contact: "Как с вами связаться? (Telegram / Телефон / Email)",
+      contactPlaceholder: "@username или +7...",
+      submit: "Отправить запрос",
+      submitting: "Отправка...",
+      successTitle: "Запрос отправлен!",
+      successDesc: "Мы уже работаем над вашим подбором. Наш премиум-консьерж свяжется с вами в ближайшее время.",
+      telegramAlt: "Или напишите нам напрямую в Telegram",
+      close: "Закрыть",
+      required: "Пожалуйста, заполните Имя и Контактные данные"
     }
   },
   EN: {
@@ -142,7 +172,8 @@ const TRANSLATIONS = {
       p: "Real bookings for our clients over the past month. Compare prices and see for yourself.",
       items: [
          { name: "ME Barcelona", loc: "Spain, Barcelona • 7 nights", desc: "Suite with city view. Booking via a closed tour operator channel.", disc: "-45%" },
-         { name: "The Capra Saas-Fee", loc: "Switzerland, Alps • 5 nights", desc: "Premium chalet. Using regional API pricing.", disc: "-40%" }
+         { name: "The Capra Saas-Fee", loc: "Switzerland, Alps • 5 nights", desc: "Premium chalet. Using regional API pricing.", disc: "-40%" },
+         { name: "Hotel Francisco Boutique", loc: "Spain, Madrid • 4 nights", desc: "Cosy historical boutique hotel in the heart of Madrid. Booking via exclusive corporate rates.", disc: "-50%" }
       ]
     },
     trust: [
@@ -179,6 +210,29 @@ const TRANSLATIONS = {
       text: "We use cookies to improve your experience. By continuing to use the site, you agree to our ",
       link: "Cookie Policy",
       btn: "Accept"
+    },
+    form: {
+      title: "Hotel Selection Request",
+      subtitle: "Specify your preferences, and we will prepare an exclusive offer with up to 50% discount tailored for you.",
+      name: "Your Name",
+      namePlaceholder: "Alexander",
+      destination: "Where are you traveling? / Hotel Name",
+      destinationPlaceholder: "E.g., ME Barcelona or Maldives",
+      dates: "Travel Dates",
+      datesPlaceholder: "Summer 2026 or specific dates",
+      guests: "Number of Guests",
+      guestsPlaceholder: "E.g., 2 adults, 1 child",
+      budget: "Estimated Budget",
+      budgetPlaceholder: "E.g., up to 3000€",
+      contact: "How can we contact you? (Telegram / Phone / Email)",
+      contactPlaceholder: "@username or +1...",
+      submit: "Submit Request",
+      submitting: "Sending...",
+      successTitle: "Request Sent!",
+      successDesc: "We are already working on your selection. Our premium concierge will contact you shortly.",
+      telegramAlt: "Or write to us directly on Telegram",
+      close: "Close",
+      required: "Please fill in your Name and Contact details"
     }
   }
 };
@@ -381,12 +435,269 @@ function CookieBanner() {
   );
 }
 
+function BookingFormModal() {
+  const { lang, isFormOpen, setIsFormOpen, t } = useTranslation();
+  const [formData, setFormData] = useState({
+    name: "",
+    destination: "",
+    dates: "",
+    guests: "",
+    budget: "",
+    contact: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isFormOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isFormOpen]);
+
+  if (!isFormOpen) return null;
+
+  const handleClose = () => {
+    setIsFormOpen(false);
+    // Reset state after transition
+    setTimeout(() => {
+      setIsSuccess(false);
+      setError(null);
+      setFormData({
+        name: "",
+        destination: "",
+        dates: "",
+        guests: "",
+        budget: "",
+        contact: ""
+      });
+    }, 300);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.contact.trim()) {
+      setError(t.form.required);
+      return;
+    }
+
+    setError(null);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/request-booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, lang })
+      });
+
+      const data = await response.json() as any;
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      setIsSuccess(true);
+    } catch (err: any) {
+      setError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <>
+      {/* Backdrop */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={handleClose}
+        className="fixed inset-0 bg-black/85 backdrop-blur-md z-[300] cursor-pointer"
+      />
+
+      {/* Modal Container */}
+      <div className="fixed inset-0 overflow-y-auto z-[310] flex items-center justify-center p-4 md:p-6 pointer-events-none">
+        <motion.div 
+          initial={{ scale: 0.95, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.95, opacity: 0, y: 20 }}
+          transition={{ type: "spring", duration: 0.5 }}
+          className="bg-[#111111] border border-primary/10 max-w-lg w-full rounded-lg shadow-2xl relative overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
+        >
+          {/* Subtle top light effect */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+
+          {/* Close button */}
+          <button 
+            onClick={handleClose}
+            className="absolute top-6 right-6 text-on-surface-variant/60 hover:text-primary transition-colors cursor-pointer z-10"
+          >
+            <X size={20} />
+          </button>
+
+          <div className="overflow-y-auto p-8 md:p-10">
+            {!isSuccess ? (
+              <>
+                <div className="mb-8">
+                  <h3 className="font-headline text-3xl text-on-surface uppercase tracking-wider mb-3">
+                    {t.form.title}
+                  </h3>
+                  <p className="font-body text-sm text-on-surface-variant/75 font-light leading-relaxed">
+                    {t.form.subtitle}
+                  </p>
+                </div>
+
+                {error && (
+                  <div className="bg-[#1c1212] border border-red-500/20 text-red-400 p-4 rounded-sm text-xs font-body mb-6">
+                    {error}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-primary mb-2 font-semibold font-sans">
+                      {t.form.name} <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder={t.form.namePlaceholder}
+                      className="w-full bg-[#181818] border border-primary/10 rounded-md px-4 py-3 text-sm text-[#E5E2E1] placeholder-on-surface-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none transition-all font-body font-light"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#E5E2E1]/60 mb-2 font-semibold font-sans">
+                      {t.form.destination}
+                    </label>
+                    <input 
+                      type="text"
+                      value={formData.destination}
+                      onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
+                      placeholder={t.form.destinationPlaceholder}
+                      className="w-full bg-[#181818] border border-primary/10 rounded-md px-4 py-3 text-sm text-[#E5E2E1] placeholder-on-surface-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none transition-all font-body font-light"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#E5E2E1]/60 mb-2 font-semibold font-sans">
+                        {t.form.dates}
+                      </label>
+                      <input 
+                        type="text"
+                        value={formData.dates}
+                        onChange={(e) => setFormData({ ...formData, dates: e.target.value })}
+                        placeholder={t.form.datesPlaceholder}
+                        className="w-full bg-[#181818] border border-primary/10 rounded-md px-4 py-3 text-sm text-[#E5E2E1] placeholder-on-surface-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none transition-all font-body font-light"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#E5E2E1]/60 mb-2 font-semibold font-sans">
+                        {t.form.guests}
+                      </label>
+                      <input 
+                        type="text"
+                        value={formData.guests}
+                        onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
+                        placeholder={t.form.guestsPlaceholder}
+                        className="w-full bg-[#181818] border border-primary/10 rounded-md px-4 py-3 text-sm text-[#E5E2E1] placeholder-on-surface-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none transition-all font-body font-light"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#E5E2E1]/60 mb-2 font-semibold font-sans">
+                      {t.form.budget}
+                    </label>
+                    <input 
+                      type="text"
+                      value={formData.budget}
+                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                      placeholder={t.form.budgetPlaceholder}
+                      className="w-full bg-[#181818] border border-primary/10 rounded-md px-4 py-3 text-sm text-[#E5E2E1] placeholder-on-surface-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none transition-all font-body font-light"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-primary mb-2 font-semibold font-sans">
+                      {t.form.contact} <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                      type="text"
+                      required
+                      value={formData.contact}
+                      onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                      placeholder={t.form.contactPlaceholder}
+                      className="w-full bg-[#181818] border border-primary/10 rounded-md px-4 py-3 text-sm text-[#E5E2E1] placeholder-on-surface-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none transition-all font-body font-light"
+                    />
+                  </div>
+
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full mt-4 gold-gradient text-black py-4 rounded-md font-label text-xs uppercase tracking-[0.2em] font-bold active:scale-98 transition-all duration-200 text-center shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? t.form.submitting : t.form.submit}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="flex flex-col items-center text-center py-6">
+                <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-8">
+                  <Check className="text-primary w-8 h-8" />
+                </div>
+                
+                <h3 className="font-headline text-3xl text-on-surface uppercase tracking-wider mb-4">
+                  {t.form.successTitle}
+                </h3>
+                
+                <p className="font-body text-sm text-on-surface-variant/80 font-light leading-relaxed max-w-sm mb-12 font-sans">
+                  {t.form.successDesc}
+                </p>
+
+                <div className="space-y-4 w-full">
+                  <a 
+                    href="https://t.me/EASYBOOK_HOTELS"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 w-full bg-[#1A1A1A] border border-primary/20 hover:border-primary/50 text-primary py-4 rounded-md font-label text-xs uppercase tracking-[0.2em] font-bold transition-all text-center font-sans"
+                  >
+                    <span>{t.form.telegramAlt}</span>
+                  </a>
+
+                  <button 
+                    onClick={handleClose}
+                    className="w-full bg-transparent hover:bg-white/5 text-[#E5E2E1]/60 hover:text-[#E5E2E1] py-4 rounded-md font-label text-xs uppercase tracking-[0.2em] font-semibold transition-all text-center cursor-pointer font-sans"
+                  >
+                    {t.form.close}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </>
+  );
+}
+
 function Layout({ children }: { children: React.ReactNode }) {
-  const { lang, setLang, t } = useTranslation();
+  const { lang, setLang, t, setIsFormOpen } = useTranslation();
 
   return (
     <div className="min-h-screen bg-surface selection:bg-primary selection:text-on-primary">
       <CookieBanner />
+      <BookingFormModal />
       {/* Top Navigation Bar */}
       <nav className="fixed top-0 w-full z-[100] bg-[#131313] backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-6 md:px-12 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-5 md:py-5 transition-all duration-300 before:content-[''] before:absolute before:-top-[500px] before:left-0 before:right-0 before:h-[500px] before:bg-[#131313]">
         <Link to="/" className="text-xl font-headline font-bold text-primary tracking-[0.1em] uppercase">
@@ -426,14 +737,12 @@ function Layout({ children }: { children: React.ReactNode }) {
               <Instagram size={20} />
             </a>
           </div>
-          <a 
-            href="https://t.me/EASYBOOK_HOTELS" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="gold-gradient text-black px-8 py-3 rounded-md font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center shadow-lg"
+          <button 
+            onClick={() => setIsFormOpen(true)}
+            className="gold-gradient text-black px-8 py-3 rounded-md font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center shadow-lg cursor-pointer"
           >
             {t.nav.book}
-          </a>
+          </button>
         </div>
       </nav>
 
@@ -476,7 +785,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 }
 
 function Home() {
-  const { t } = useTranslation();
+  const { lang, t, setIsFormOpen } = useTranslation();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   return (
@@ -568,14 +877,12 @@ function Home() {
           <p className="font-body text-xl text-on-surface-variant mb-16 leading-relaxed font-light max-w-2xl mx-auto">
             {t.economy.p}
           </p>
-          <a 
-            href="https://t.me/EASYBOOK_HOTELS"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="gold-gradient text-on-primary px-16 py-6 rounded-sm font-label text-xs uppercase tracking-[0.3em] font-bold active:scale-95 transition-all inline-block shadow-xl"
+          <button 
+            onClick={() => setIsFormOpen(true)}
+            className="gold-gradient text-black px-16 py-6 rounded-sm font-label text-xs uppercase tracking-[0.3em] font-bold active:scale-95 transition-all inline-block shadow-xl cursor-pointer"
           >
             {t.economy.btn}
-          </a>
+          </button>
         </div>
       </section>
 
@@ -623,6 +930,11 @@ function Home() {
                 img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDB2wIUfUAQf2AeHVrjDdhOr4BXy_5HVWy2d-5DFyU0PGtYTiM40iW2CxdC0lIWGI8crMqzLJs4PuAHJ7ix-RPjWXu4FGB6fL-Ts7qH4ggHkAaPS5GUzOMtqVjaWEX8OlxGmHgaeHFR8FHJa164dQRpH6ojmR2v1tLudEc_UQ045mfWHBUtnpIbFSGWyKHbkatMZ1ph3SpgkiTLueLF3gEkEEhigm-W7cVg33NLgBM4JAuPV0AE-VZ1gahyNEKjzV0EiBPoE6ay3ElV=s0",
                 old: "€4,100",
                 new: "€2,460",
+              },
+              {
+                img: franciscoBoutique,
+                old: "$1,813",
+                new: "$900",
               }
             ].map((item, i) => (
               <motion.div 
@@ -630,8 +942,8 @@ function Home() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                className="bg-[#0A0A0A] border border-outline-variant/10 p-8 md:p-12 rounded-sm hover:border-primary/40 transition-all duration-500 flex flex-col lg:flex-row gap-12 md:gap-20 items-center group cursor-default"
+                whileHover={{ y: -5 }}
+                className="bg-[#0A0A0A] border border-outline-variant/10 p-8 md:p-12 rounded-sm hover:border-primary/20 transition-all duration-500 flex flex-col lg:flex-row gap-12 md:gap-20 items-center group"
               >
                 <div className="w-full lg:w-3/5 aspect-[16/9] overflow-hidden rounded-sm">
                   <img 
@@ -641,20 +953,32 @@ function Home() {
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                <div className="w-full lg:w-2/5 flex flex-col">
-                  <h4 className="font-headline text-3xl md:text-4xl text-on-surface mb-3 uppercase tracking-widest">{t.cases.items[i].name}</h4>
-                  <p className="font-label text-on-surface-variant/60 text-[9px] md:text-[10px] uppercase tracking-[0.25em] mb-8">{t.cases.items[i].loc}</p>
-                  <p className="font-body text-on-surface-variant/80 mb-10 font-light leading-relaxed text-sm md:text-base max-w-sm">{t.cases.items[i].desc}</p>
+                <div className="w-full lg:w-2/5 flex flex-col h-full justify-between">
+                  <div>
+                    <h4 className="font-headline text-3xl md:text-4xl text-on-surface mb-3 uppercase tracking-widest">{t.cases.items[i].name}</h4>
+                    <p className="font-label text-on-surface-variant/60 text-[9px] md:text-[10px] uppercase tracking-[0.25em] mb-8">{t.cases.items[i].loc}</p>
+                    <p className="font-body text-on-surface-variant/80 mb-10 font-light leading-relaxed text-sm md:text-base max-w-sm">{t.cases.items[i].desc}</p>
+                  </div>
                   
                   <div className="mt-auto space-y-8">
                     <div className="bg-[#1C1812] text-primary/70 px-6 py-2 rounded-full font-label text-[10px] uppercase tracking-[0.2em] font-bold w-fit border border-primary/5">
                       {t.cases.items[i].disc} Savings
                     </div>
-                    <div className="flex items-center gap-6">
-                      <span className="text-on-surface-variant/20 line-through text-base md:text-xl font-label">{item.old}</span>
-                      <span className="text-primary text-5xl md:text-6xl font-headline font-medium tracking-tight">
-                        {item.new}
-                      </span>
+                    <div className="flex items-center justify-between gap-4 flex-wrap pt-2">
+                      <div className="flex items-center gap-6">
+                        <span className="text-on-surface-variant/20 line-through text-base md:text-xl font-label">{item.old}</span>
+                        <span className="text-primary text-5xl md:text-6xl font-headline font-medium tracking-tight">
+                          {item.new}
+                        </span>
+                      </div>
+                      <a 
+                        href="https://t.me/easybook_hotel"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="gold-gradient text-black px-6 py-3 rounded-md font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 hover:scale-[1.02] transition-all duration-200 shadow-lg text-center inline-block cursor-pointer"
+                      >
+                        {lang === "RU" ? "Подробнее в Telegram" : "Details in Telegram"}
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -683,14 +1007,12 @@ function Home() {
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="font-headline text-6xl md:text-8xl text-on-surface mb-12 uppercase tracking-tighter leading-none" dangerouslySetInnerHTML={{ __html: t.cta.h2 }}></h2>
           <div className="flex flex-col sm:flex-row justify-center gap-12 items-center">
-            <a 
-              href="https://t.me/EASYBOOK_HOTELS"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gold-gradient text-on-primary px-20 py-7 rounded-sm font-label text-xs uppercase tracking-[0.4em] font-bold active:scale-95 transition-all shadow-2xl"
+            <button 
+              onClick={() => setIsFormOpen(true)}
+              className="gold-gradient text-black px-20 py-7 rounded-sm font-label text-xs uppercase tracking-[0.4em] font-bold active:scale-95 transition-all shadow-2xl cursor-pointer"
             >
               {t.cta.btn}
-            </a>
+            </button>
             <a 
               href="/#cases"
               className="font-label text-xs uppercase tracking-[0.4em] text-on-surface-variant hover:text-primary transition-colors"
@@ -810,10 +1132,11 @@ function PolicyPage({ title, date, content }: { title: string; date?: string; co
 
 export default function App() {
   const [lang, setLang] = useState<Language>('RU');
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const t = TRANSLATIONS[lang];
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>
+    <LanguageContext.Provider value={{ lang, setLang, t, isFormOpen, setIsFormOpen }}>
       <BrowserRouter>
         <ScrollToTop />
         <Layout>

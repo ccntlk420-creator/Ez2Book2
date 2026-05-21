@@ -1,5 +1,6 @@
 {
   "name": "Easy Book - Luxury Travel Concierge",
   "description": "Exclusive hotel bookings with 30-50% savings compared to major platforms.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
