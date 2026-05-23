@@ -709,23 +709,23 @@ function Layout({ children }: { children: React.ReactNode }) {
         <Link to="/" className="text-base sm:text-lg md:text-xl font-headline font-bold text-primary tracking-[0.05em] sm:tracking-[0.1em] uppercase whitespace-nowrap">
           Easy Book
         </Link>
-        <div className="hidden md:flex items-center space-x-10 font-label font-medium text-[10px] tracking-[0.2em] uppercase">
+        <div className="hidden lg:flex items-center space-x-8 xl:space-x-10 font-label font-medium text-[10px] tracking-[0.2em] uppercase">
           <Link to="/" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t.nav.about}</Link>
           <a href="/#cases" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t.nav.cases}</a>
           <a href="/#faq" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t.nav.faq}</a>
         </div>
         
-        <div className="flex items-center gap-2 sm:gap-4 md:gap-8">
-          <div className="flex items-center gap-3 sm:gap-4 md:gap-6 border-r border-primary/10 pr-3 sm:pr-4 md:pr-8">
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-8">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 border-r border-primary/10 pr-2 sm:pr-4 lg:pr-8">
             {/* Lang Toggle UI matching screenshot */}
-            <div className="flex items-center font-label text-[9px] sm:text-[10px] font-bold tracking-[0.15em] sm:tracking-[0.2em]">
+            <div className="flex items-center font-label text-[9px] sm:text-[10px] font-bold tracking-[0.12em] sm:tracking-[0.2em]">
               <button 
                 onClick={() => setLang('RU')}
                 className={`cursor-pointer transition-all ${lang === 'RU' ? 'text-primary' : 'text-[#E5E2E1]/30'}`}
               >
                 RU
               </button>
-              <div className="w-px h-3 bg-on-surface/20 mx-1.5 sm:mx-3.5"></div>
+              <div className="w-px h-3 bg-on-surface/20 mx-1 sm:mx-3"></div>
               <button 
                 onClick={() => setLang('EN')}
                 className={`cursor-pointer transition-all ${lang === 'EN' ? 'text-primary' : 'text-[#E5E2E1]/30'}`}
@@ -745,7 +745,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <button 
             onClick={() => setIsFormOpen(true)}
-            className="gold-gradient text-black px-3.5 py-2 md:px-8 md:py-3 rounded-md font-label text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center shadow-lg cursor-pointer whitespace-nowrap"
+            className="gold-gradient text-black px-3 py-1.5 sm:px-6 sm:py-2.5 lg:px-8 lg:py-3 rounded-md font-label text-[9px] sm:text-[10px] uppercase tracking-[0.08em] sm:tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center shadow-lg cursor-pointer whitespace-nowrap"
           >
             {t.nav.book}
           </button>
@@ -798,7 +798,7 @@ function Home() {
     <>
       {/* New Hero Variant: Split Layout */}
       <section className="relative min-h-screen lg:h-screen flex flex-col lg:flex-row items-stretch overflow-hidden border-b border-primary/10">
-        <div className="lg:w-1/2 flex flex-col justify-center px-6 md:px-20 pt-28 pb-16 md:py-20 relative z-10 bg-surface">
+        <div className="lg:w-1/2 flex flex-col justify-center px-6 sm:px-12 lg:px-20 pt-28 pb-16 md:py-20 relative z-10 bg-surface">
           <div className="absolute top-10 left-10 hidden xl:block">
             <span className="font-label text-[10px] uppercase tracking-[0.4em] text-primary/40 rotate-90 origin-left inline-block whitespace-nowrap">
               {t.hero.badge}
@@ -813,17 +813,17 @@ function Home() {
             <div className="font-label text-primary text-[10px] uppercase tracking-[0.3em] mb-8 font-semibold">
               {t.hero.top}
             </div>
-            <h1 className="font-headline text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-on-surface leading-[0.85] mb-8 md:mb-12 uppercase">
+            <h1 className="font-headline text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-on-surface leading-[0.85] mb-8 lg:mb-12 uppercase">
                {t.hero.h1} <br />
               <span className="italic font-light text-primary">{t.hero.h1Span}</span>
             </h1>
-            <p className="font-body text-base md:text-lg lg:text-xl text-on-surface-variant max-w-md mb-8 md:mb-16 leading-relaxed font-light">
+            <p className="font-body text-base md:text-lg lg:text-xl text-on-surface-variant max-w-md mb-8 lg:mb-16 leading-relaxed font-light">
               {t.hero.p}
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 md:gap-8 mb-4 lg:mb-0">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 mb-4 lg:mb-0">
               <a 
                 href="/#cases"
-                className="gold-gradient text-on-primary px-14 py-6 rounded-sm font-label text-[11px] uppercase tracking-[0.25em] font-bold active:scale-95 transition-all shadow-2xl text-center"
+                className="gold-gradient text-on-primary px-8 py-4 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-sm font-label text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-bold active:scale-95 transition-all shadow-2xl text-center"
               >
                 {t.hero.btnCases}
               </a>
@@ -831,7 +831,7 @@ function Home() {
                 href="https://t.me/EASYBOOK_HOTELS"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 font-label text-[11px] uppercase tracking-[0.25em] text-on-surface hover:text-primary transition-colors py-3"
+                className="group flex items-center justify-center sm:justify-start gap-4 font-label text-[11px] uppercase tracking-[0.25em] text-on-surface hover:text-primary transition-colors py-3"
               >
                 <span className="w-12 h-px bg-primary/30 group-hover:w-16 transition-all"></span>
                 {t.hero.telegram}
@@ -860,11 +860,11 @@ function Home() {
 
       {/* New Features Variant: Bordered Grid */}
       <section className="py-0 border-b border-primary/10">
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3">
           {(t.features as any[]).map((feature, i) => (
-            <div key={i} className="p-16 border-r border-primary/10 last:border-r-0 hover:bg-primary/[0.02] transition-colors group">
-              {[Key, ShieldCheck, Lock][i] && React.createElement([Key, ShieldCheck, Lock][i], { className: "text-primary w-10 h-10 mb-10 stroke-[1px] group-hover:scale-110 transition-transform" })}
-              <h3 className="font-headline text-2xl text-on-surface uppercase tracking-widest mb-6">{feature.title}</h3>
+            <div key={i} className="p-8 sm:p-10 lg:p-16 border-b sm:border-b-0 sm:border-r border-primary/10 last:border-b-0 sm:last:border-r-0 hover:bg-primary/[0.02] transition-colors group">
+              {[Key, ShieldCheck, Lock][i] && React.createElement([Key, ShieldCheck, Lock][i], { className: "text-primary w-10 h-10 mb-8 stroke-[1px] group-hover:scale-110 transition-transform" })}
+              <h3 className="font-headline text-xl lg:text-2xl text-on-surface uppercase tracking-widest mb-4 lg:mb-6">{feature.title}</h3>
               <p className="font-body text-on-surface-variant leading-relaxed font-light text-sm">
                 {feature.desc}
               </p>
@@ -874,18 +874,18 @@ function Home() {
       </section>
 
       {/* New Economy Block: Centered Editorial */}
-      <section className="py-20 md:py-40 px-6 md:px-12 bg-surface-container-lowest">
+      <section className="py-16 sm:py-24 lg:py-40 px-6 md:px-12 bg-surface-container-lowest">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center justify-center px-4 py-1.5 border border-primary/20 rounded-full mb-10">
             <span className="font-label text-[9px] uppercase tracking-[0.3em] text-primary leading-none mr-[-0.3em]">{t.economy.badge}</span>
           </div>
-          <h2 className="font-headline text-5xl md:text-7xl text-on-surface mb-12 leading-tight uppercase tracking-widest" dangerouslySetInnerHTML={{ __html: t.economy.h2 }}></h2>
-          <p className="font-body text-xl text-on-surface-variant mb-16 leading-relaxed font-light max-w-2xl mx-auto">
+          <h2 className="font-headline text-3xl sm:text-5xl lg:text-7xl text-on-surface mb-8 lg:mb-12 leading-tight uppercase tracking-widest" dangerouslySetInnerHTML={{ __html: t.economy.h2 }}></h2>
+          <p className="font-body text-base sm:text-lg lg:text-xl text-on-surface-variant mb-10 lg:mb-16 leading-relaxed font-light max-w-2xl mx-auto">
             {t.economy.p}
           </p>
           <button 
             onClick={() => setIsFormOpen(true)}
-            className="gold-gradient text-black px-16 py-6 rounded-sm font-label text-xs uppercase tracking-[0.3em] font-bold active:scale-95 transition-all inline-block shadow-xl cursor-pointer"
+            className="gold-gradient text-black px-10 py-4 sm:px-16 sm:py-6 rounded-sm font-label text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold active:scale-95 transition-all inline-block shadow-xl cursor-pointer"
           >
             {t.economy.btn}
           </button>
@@ -893,22 +893,22 @@ function Home() {
       </section>
 
       {/* Audience Section */}
-      <section className="py-16 md:py-32 px-6 md:px-12 bg-surface">
+      <section className="py-16 lg:py-32 px-6 md:px-12 bg-surface">
         <div className="max-w-[1440px] mx-auto">
-          <div className="mb-20">
-            <h2 className="font-headline text-4xl text-on-surface uppercase tracking-widest">{t.audience.title}</h2>
-            <div className="w-16 h-px bg-primary mt-8"></div>
+          <div className="mb-14 sm:mb-20">
+            <h2 className="font-headline text-3xl sm:text-4xl text-on-surface uppercase tracking-widest">{t.audience.title}</h2>
+            <div className="w-16 h-px bg-primary mt-6 sm:mt-8"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
             {(t.audience.items as any[]).map((item, i) => (
               <motion.div 
                 key={i}
                 whileHover={{ y: -10 }}
-                className="bg-surface-container-lowest p-12 border border-outline-variant/10 rounded-sm hover:border-primary/40 transition-all duration-500"
+                className="bg-surface-container-lowest p-6 sm:p-8 lg:p-12 border border-outline-variant/10 rounded-sm hover:border-primary/40 transition-all duration-500"
               >
-                <div className="font-label text-primary text-[10px] uppercase tracking-[0.25em] mb-6 font-semibold">{item.label}</div>
-                <h4 className="font-headline text-xl text-on-surface mb-8 uppercase tracking-widest">{item.title}</h4>
-                <p className="font-body text-on-surface-variant font-light leading-relaxed">{item.desc}</p>
+                <div className="font-label text-primary text-[10px] uppercase tracking-[0.25em] mb-4 sm:mb-6 font-semibold">{item.label}</div>
+                <h4 className="font-headline text-lg sm:text-xl text-on-surface mb-6 sm:mb-8 uppercase tracking-widest">{item.title}</h4>
+                <p className="font-body text-on-surface-variant font-light leading-relaxed text-sm sm:text-base">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -916,16 +916,16 @@ function Home() {
       </section>
 
       {/* New Cases Variant: Vertical List with Large Images */}
-      <section id="cases" className="py-20 md:py-40 px-6 md:px-12 bg-surface">
+      <section id="cases" className="py-16 sm:py-24 lg:py-40 px-6 md:px-12 bg-surface">
         <div className="max-w-[1440px] mx-auto">
-          <div className="mb-24 space-y-8">
-            <h2 className="font-headline text-5xl md:text-7xl text-on-surface uppercase tracking-widest leading-none" dangerouslySetInnerHTML={{ __html: t.cases.h2 }}></h2>
+          <div className="mb-16 sm:mb-24 space-y-6 sm:space-y-8">
+            <h2 className="font-headline text-3xl sm:text-5xl lg:text-7xl text-on-surface uppercase tracking-widest leading-none" dangerouslySetInnerHTML={{ __html: t.cases.h2 }}></h2>
             <p className="font-body text-on-surface-variant/60 max-w-sm font-light text-sm md:text-base leading-relaxed">
               {t.cases.p}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 gap-12 md:gap-20">
+          <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:gap-20">
             {[
               {
                 img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBm1zs63w0gEkSq0P0N37sNImg8kZWRJBSapBYQtAAko3kry3AVzw7cjHKvQwUDSG1y0zZUwcehIGTKi9ITHz7kIjNpQYKTi8QAeIxX0MbfhDsOQTcKZ2Hfk7bmXimU479DBmwM6jUwUgsqp2OKTHRzfcVU1xYl8zyUFkLCzpC4g9yCRZnG0c_YEGeY93C1sjSqR2KRerS6-9plapcy3OouBeSbldhAEZJfpuHQZFzdL68PrMQa4xN_jgtDyyUR6IsUCbIMAMQtHfnv=s0",
@@ -949,7 +949,7 @@ function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
-                className="bg-[#0A0A0A] border border-outline-variant/10 p-8 md:p-12 rounded-sm hover:border-primary/20 transition-all duration-500 flex flex-col lg:flex-row gap-12 md:gap-20 items-center group"
+                className="bg-[#0A0A0A] border border-outline-variant/10 p-6 sm:p-8 lg:p-12 rounded-sm hover:border-primary/20 transition-all duration-500 flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-20 items-center group"
               >
                 <div className="w-full lg:w-3/5 aspect-[16/9] overflow-hidden rounded-sm">
                   <img 
@@ -961,27 +961,27 @@ function Home() {
                 </div>
                 <div className="w-full lg:w-2/5 flex flex-col h-full justify-between">
                   <div>
-                    <h4 className="font-headline text-3xl md:text-4xl text-on-surface mb-3 uppercase tracking-widest">{t.cases.items[i].name}</h4>
-                    <p className="font-label text-on-surface-variant/60 text-[9px] md:text-[10px] uppercase tracking-[0.25em] mb-8">{t.cases.items[i].loc}</p>
-                    <p className="font-body text-on-surface-variant/80 mb-10 font-light leading-relaxed text-sm md:text-base max-w-sm">{t.cases.items[i].desc}</p>
+                    <h4 className="font-headline text-2xl sm:text-3xl lg:text-4xl text-on-surface mb-3 uppercase tracking-widest">{t.cases.items[i].name}</h4>
+                    <p className="font-label text-on-surface-variant/60 text-[9px] md:text-[10px] uppercase tracking-[0.25em] mb-6 sm:mb-8">{t.cases.items[i].loc}</p>
+                    <p className="font-body text-on-surface-variant/80 mb-6 sm:mb-10 font-light leading-relaxed text-sm md:text-base max-w-sm">{t.cases.items[i].desc}</p>
                   </div>
                   
-                  <div className="mt-auto space-y-8">
-                    <div className="bg-[#1C1812] text-primary/70 px-6 py-2 rounded-full font-label text-[10px] uppercase tracking-[0.2em] font-bold w-fit border border-primary/5">
+                  <div className="mt-auto space-y-6 sm:space-y-8">
+                    <div className="bg-[#1C1812] text-primary/70 px-5 py-1.5 rounded-full font-label text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold w-fit border border-primary/5">
                       {t.cases.items[i].disc} Savings
                     </div>
                     <div className="flex items-center justify-between gap-4 flex-wrap pt-2">
-                      <div className="flex items-center gap-6">
-                        <span className="text-on-surface-variant/20 line-through text-base md:text-xl font-label">{item.old}</span>
-                        <span className="text-primary text-5xl md:text-6xl font-headline font-medium tracking-tight">
-                          {item.new}
-                        </span>
-                      </div>
+                       <div className="flex items-center gap-4 sm:gap-6">
+                         <span className="text-on-surface-variant/20 line-through text-base sm:text-xl font-label">{item.old}</span>
+                         <span className="text-primary text-4xl sm:text-5xl lg:text-6xl font-headline font-medium tracking-tight">
+                           {item.new}
+                         </span>
+                       </div>
                       <a 
                         href="https://t.me/easybook_hotel"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="gold-gradient text-black px-6 py-3 rounded-md font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 hover:scale-[1.02] transition-all duration-200 shadow-lg text-center inline-block cursor-pointer"
+                        className="gold-gradient text-black px-4 py-2.5 sm:px-6 sm:py-3 rounded-md font-label text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 hover:scale-[1.02] transition-all duration-200 shadow-lg text-center inline-block cursor-pointer whitespace-nowrap"
                       >
                         {lang === "RU" ? "Подробнее в Telegram" : "Details in Telegram"}
                       </a>
@@ -995,12 +995,12 @@ function Home() {
       </section>
 
       {/* Trust Metrics */}
-      <section className="py-16 md:py-32 px-4 md:px-12 bg-surface">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-4 md:flex md:flex-wrap justify-between gap-1 md:gap-12 text-center md:text-left">
+      <section className="py-12 sm:py-20 lg:py-32 px-4 sm:px-6 lg:px-12 bg-surface">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-2 sm:grid-cols-4 lg:flex lg:flex-row lg:justify-between gap-6 sm:gap-8 lg:gap-12 text-center lg:text-left">
           {(t.trust as any[]).map((metric, i) => (
-            <div key={i} className="flex flex-col items-center md:items-start">
-              <div className="text-2xl md:text-6xl font-headline text-primary mb-1 md:mb-4 font-bold tracking-tight md:tracking-widest">{metric.val}</div>
-              <div className="font-label text-[7px] md:text-[10px] text-on-surface-variant uppercase tracking-tighter md:tracking-[0.2em] font-medium leading-tight md:leading-normal">
+            <div key={i} className="flex flex-col items-center lg:items-start bg-surface-container-lowest/20 lg:bg-transparent p-4 sm:p-6 lg:p-0 border border-outline-variant/5 lg:border-0 rounded-sm">
+              <div className="text-3xl sm:text-5xl lg:text-6xl font-headline text-primary mb-1.5 sm:mb-3 font-bold tracking-tight lg:tracking-widest">{metric.val}</div>
+              <div className="font-label text-[8px] sm:text-[10px] text-on-surface-variant uppercase tracking-[0.1em] lg:tracking-[0.2em] font-medium leading-tight sm:leading-normal">
                 {metric.label}
               </div>
             </div>
@@ -1009,13 +1009,13 @@ function Home() {
       </section>
 
       {/* New CTA Variant: Minimalist Dark */}
-      <section className="py-20 md:py-60 px-6 md:px-12 bg-surface-container-lowest border-y border-primary/10">
+      <section className="py-16 sm:py-28 lg:py-60 px-6 md:px-12 bg-surface-container-lowest border-y border-primary/10">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="font-headline text-6xl md:text-8xl text-on-surface mb-12 uppercase tracking-tighter leading-none" dangerouslySetInnerHTML={{ __html: t.cta.h2 }}></h2>
-          <div className="flex flex-col sm:flex-row justify-center gap-12 items-center">
+          <h2 className="font-headline text-4xl sm:text-6xl lg:text-8xl text-on-surface mb-8 lg:mb-12 uppercase tracking-tighter leading-none" dangerouslySetInnerHTML={{ __html: t.cta.h2 }}></h2>
+          <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-12 items-center">
             <button 
               onClick={() => setIsFormOpen(true)}
-              className="gold-gradient text-black px-20 py-7 rounded-sm font-label text-xs uppercase tracking-[0.4em] font-bold active:scale-95 transition-all shadow-2xl cursor-pointer"
+              className="gold-gradient text-black px-12 py-5 sm:px-20 sm:py-7 rounded-sm font-label text-[10px] sm:text-xs uppercase tracking-[0.4em] font-bold active:scale-95 transition-all shadow-2xl cursor-pointer"
             >
               {t.cta.btn}
             </button>
