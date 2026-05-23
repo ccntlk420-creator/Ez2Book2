@@ -705,8 +705,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       <CookieBanner />
       <BookingFormModal />
       {/* Top Navigation Bar */}
-      <nav className="fixed top-0 w-full z-[100] bg-[#131313] backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-6 md:px-12 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-5 md:py-5 transition-all duration-300 before:content-[''] before:absolute before:-top-[500px] before:left-0 before:right-0 before:h-[500px] before:bg-[#131313]">
-        <Link to="/" className="text-xl font-headline font-bold text-primary tracking-[0.1em] uppercase">
+      <nav className="fixed top-0 w-full z-[100] bg-[#131313] backdrop-blur-md border-b border-primary/10 flex justify-between items-center px-4 sm:px-6 md:px-12 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-5 md:py-5 transition-all duration-300 before:content-[''] before:absolute before:-top-[500px] before:left-0 before:right-0 before:h-[500px] before:bg-[#131313]">
+        <Link to="/" className="text-base sm:text-lg md:text-xl font-headline font-bold text-primary tracking-[0.05em] sm:tracking-[0.1em] uppercase whitespace-nowrap">
           Easy Book
         </Link>
         <div className="hidden md:flex items-center space-x-10 font-label font-medium text-[10px] tracking-[0.2em] uppercase">
@@ -715,17 +715,17 @@ function Layout({ children }: { children: React.ReactNode }) {
           <a href="/#faq" className="text-[#E5E2E1] hover:text-[#FFDEA5] transition-colors duration-300">{t.nav.faq}</a>
         </div>
         
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-6 border-r border-primary/10 pr-8">
+        <div className="flex items-center gap-2 sm:gap-4 md:gap-8">
+          <div className="flex items-center gap-3 sm:gap-4 md:gap-6 border-r border-primary/10 pr-3 sm:pr-4 md:pr-8">
             {/* Lang Toggle UI matching screenshot */}
-            <div className="flex items-center font-label text-[10px] font-bold tracking-[0.2em]">
+            <div className="flex items-center font-label text-[9px] sm:text-[10px] font-bold tracking-[0.15em] sm:tracking-[0.2em]">
               <button 
                 onClick={() => setLang('RU')}
                 className={`cursor-pointer transition-all ${lang === 'RU' ? 'text-primary' : 'text-[#E5E2E1]/30'}`}
               >
                 RU
               </button>
-              <div className="w-px h-3 bg-on-surface/20 mx-3.5"></div>
+              <div className="w-px h-3 bg-on-surface/20 mx-1.5 sm:mx-3.5"></div>
               <button 
                 onClick={() => setLang('EN')}
                 className={`cursor-pointer transition-all ${lang === 'EN' ? 'text-primary' : 'text-[#E5E2E1]/30'}`}
@@ -738,14 +738,14 @@ function Layout({ children }: { children: React.ReactNode }) {
               href="https://www.instagram.com/easy.book_/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-[#E5E2E1]/60 hover:text-primary transition-colors"
+              className="text-[#E5E2E1]/60 hover:text-primary transition-colors flex items-center"
             >
-              <Instagram size={20} />
+              <Instagram size={16} className="sm:size-5" />
             </a>
           </div>
           <button 
             onClick={() => setIsFormOpen(true)}
-            className="gold-gradient text-black px-8 py-3 rounded-md font-label text-[10px] uppercase tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center shadow-lg cursor-pointer"
+            className="gold-gradient text-black px-3.5 py-2 md:px-8 md:py-3 rounded-md font-label text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.15em] font-bold active:scale-95 duration-200 inline-block text-center shadow-lg cursor-pointer whitespace-nowrap"
           >
             {t.nav.book}
           </button>
@@ -797,8 +797,8 @@ function Home() {
   return (
     <>
       {/* New Hero Variant: Split Layout */}
-      <section className="relative h-screen flex flex-col lg:flex-row items-stretch overflow-hidden border-b border-primary/10">
-        <div className="lg:w-1/2 flex flex-col justify-center px-6 md:px-20 py-12 md:py-20 relative z-10 bg-surface">
+      <section className="relative min-h-screen lg:h-screen flex flex-col lg:flex-row items-stretch overflow-hidden border-b border-primary/10">
+        <div className="lg:w-1/2 flex flex-col justify-center px-6 md:px-20 pt-28 pb-16 md:py-20 relative z-10 bg-surface">
           <div className="absolute top-10 left-10 hidden xl:block">
             <span className="font-label text-[10px] uppercase tracking-[0.4em] text-primary/40 rotate-90 origin-left inline-block whitespace-nowrap">
               {t.hero.badge}
@@ -813,14 +813,14 @@ function Home() {
             <div className="font-label text-primary text-[10px] uppercase tracking-[0.3em] mb-8 font-semibold">
               {t.hero.top}
             </div>
-            <h1 className="font-headline text-7xl md:text-8xl lg:text-9xl text-on-surface leading-[0.85] mb-12 uppercase">
-              {t.hero.h1} <br />
+            <h1 className="font-headline text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-on-surface leading-[0.85] mb-8 md:mb-12 uppercase">
+               {t.hero.h1} <br />
               <span className="italic font-light text-primary">{t.hero.h1Span}</span>
             </h1>
-            <p className="font-body text-lg md:text-xl text-on-surface-variant max-w-md mb-16 leading-relaxed font-light">
+            <p className="font-body text-base md:text-lg lg:text-xl text-on-surface-variant max-w-md mb-8 md:mb-16 leading-relaxed font-light">
               {t.hero.p}
             </p>
-            <div className="flex flex-col sm:flex-row gap-8">
+            <div className="flex flex-col sm:flex-row gap-6 md:gap-8 mb-4 lg:mb-0">
               <a 
                 href="/#cases"
                 className="gold-gradient text-on-primary px-14 py-6 rounded-sm font-label text-[11px] uppercase tracking-[0.25em] font-bold active:scale-95 transition-all shadow-2xl text-center"
@@ -831,7 +831,7 @@ function Home() {
                 href="https://t.me/EASYBOOK_HOTELS"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 font-label text-[11px] uppercase tracking-[0.25em] text-on-surface hover:text-primary transition-colors"
+                className="group flex items-center gap-4 font-label text-[11px] uppercase tracking-[0.25em] text-on-surface hover:text-primary transition-colors py-3"
               >
                 <span className="w-12 h-px bg-primary/30 group-hover:w-16 transition-all"></span>
                 {t.hero.telegram}
